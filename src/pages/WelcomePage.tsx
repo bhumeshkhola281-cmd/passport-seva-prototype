@@ -233,25 +233,82 @@ export const WelcomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: FileText, title: 'New Passport', desc: 'First-time application with guided document checklist tailored to your profile.', color: C.cyan, link: '' },
-              { icon: Calendar, title: 'Passport Renewal', desc: 'Re-issue for expired, damaged, or lost passports with minimal extra paperwork.', color: C.ice, link: '' },
-              { icon: CreditCard, title: 'Fee Calculator', desc: 'See the exact fee for your situation — normal, tatkal, minor, adult, 36 or 60 pages.', color: C.gold, link: '/tools/fee-calculator' },
-              { icon: Upload, title: 'Document Validator', desc: 'Check your passport photo dimensions, file size, and background colour — all client-side.', color: C.cyan, link: '/tools/document-validator' },
-              { icon: Shield, title: 'Police Verification', desc: 'Everything you need to know about the step people worry about most.', color: C.ice, link: '/learn/police-verification' },
-              { icon: HelpCircle, title: 'FAQ', desc: 'What happens if you miss your appointment, documents are rejected, or payment fails.', color: C.gold, link: '/faq' },
-            ].map(({ icon: Icon, title, desc, color, link }) => (
+              { 
+                icon: FileText, 
+                title: 'New Passport', 
+                desc: 'First-time application with guided document checklist tailored to your profile.', 
+                color: C.cyan, 
+                action: () => {
+                  dispatch({ type: 'START_APPLICATION' });
+                  dispatch({ type: 'SET_JOURNEY_TYPE', journeyType: 'standard' });
+                  dispatch({ type: 'COMPLETE_STAGE', stage: 0 });
+                  navigate('/apply/scenario');
+                },
+                cta: 'Start Application'
+              },
+              { 
+                icon: Calendar, 
+                title: 'Passport Renewal', 
+                desc: 'Re-issue for expired, damaged, or lost passports with minimal extra paperwork.', 
+                color: C.ice, 
+                action: () => {
+                  dispatch({ type: 'START_APPLICATION' });
+                  dispatch({ type: 'SET_JOURNEY_TYPE', journeyType: 'reissue' });
+                  dispatch({ type: 'COMPLETE_STAGE', stage: 0 });
+                  navigate('/apply/scenario');
+                },
+                cta: 'Renew Passport'
+              },
+              { 
+                icon: CreditCard, 
+                title: 'Fee Calculator', 
+                desc: 'See the exact fee for your situation — normal, tatkal, minor, adult, 36 or 60 pages.', 
+                color: C.gold, 
+                action: () => navigate('/tools/fee-calculator'),
+                cta: 'Calculate Fee'
+              },
+              { 
+                icon: Upload, 
+                title: 'Document Validator', 
+                desc: 'Check your passport photo dimensions, file size, and background colour — all client-side.', 
+                color: C.cyan, 
+                action: () => navigate('/tools/document-validator'),
+                cta: 'Validate Documents'
+              },
+              { 
+                icon: Shield, 
+                title: 'Police Verification', 
+                desc: 'Everything you need to know about the step people worry about most.', 
+                color: C.ice, 
+                action: () => navigate('/learn/police-verification'),
+                cta: 'Read Guide'
+              },
+              { 
+                icon: HelpCircle, 
+                title: 'FAQ', 
+                desc: 'What happens if you miss your appointment, documents are rejected, or payment fails.', 
+                color: C.gold, 
+                action: () => navigate('/faq'),
+                cta: 'View Answers'
+              },
+            ].map(({ icon: Icon, title, desc, color, action, cta }) => (
               <div
                 key={title}
-                className="glass rounded-2xl p-8 transition-all duration-200 hover:-translate-y-1"
-                style={{ borderColor: 'rgba(255,255,255,0.06)', cursor: link ? 'pointer' : 'default' }}
-                onClick={() => link && navigate(link)}
+                className="glass rounded-2xl p-8 transition-all duration-200 hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+                style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+                onClick={action}
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: `${color}15` }}>
-                  <Icon className="w-6 h-6" style={{ color }} />
+                <div>
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: `${color}15` }}>
+                    <Icon className="w-6 h-6" style={{ color }} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: 'white' }}>{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{desc}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-3" style={{ color: 'white' }}>{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{desc}</p>
-                {link && <span className="inline-block mt-3 text-xs font-bold" style={{ color }}>Explore &rarr;</span>}
+                <div className="mt-6 pt-4 border-t flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                  <span className="text-xs font-bold" style={{ color }}>{cta}</span>
+                  <span className="text-sm font-bold" style={{ color }}>&rarr;</span>
+                </div>
               </div>
             ))}
           </div>
