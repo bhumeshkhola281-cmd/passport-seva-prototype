@@ -1,4 +1,4 @@
-import type { DocumentItem, AppointmentSlot } from '../context/ApplicationContext';
+import type { DocumentItem } from '../context/ApplicationContext';
 
 /* ── Base documents required for all applications ─────────────── */
 

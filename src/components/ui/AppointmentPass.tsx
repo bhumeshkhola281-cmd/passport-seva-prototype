@@ -1,7 +1,6 @@
-import React from 'react';
 import { Calendar, Clock, MapPin, AlertCircle, CheckCircle2 } from 'lucide-react';
 
-interface Appointment {
+export interface Appointment {
   centre: string;
   date: string;
   time: string;

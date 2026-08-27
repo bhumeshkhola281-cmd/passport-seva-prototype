@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { DisclaimerBanner } from './DisclaimerBanner';
 import { JourneySpine } from './JourneySpine';

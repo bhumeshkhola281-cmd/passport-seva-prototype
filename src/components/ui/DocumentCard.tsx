@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ChevronUp, FileText, CheckCircle2, CircleDashed } from 'lucide-react';
 import type { DocumentItem, DocumentStatus } from '../../context/ApplicationContext';
 

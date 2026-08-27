@@ -1,4 +1,5 @@
-import React, { ReactNode, useState } from 'react';
+import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { Info, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface FormFieldProps {

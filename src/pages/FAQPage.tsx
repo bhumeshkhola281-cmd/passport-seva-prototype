@@ -79,7 +79,7 @@ export function FAQPage() {
         {filtered.length === 0 && (
           <p className="text-center py-8" style={{ color: 'var(--color-graphite-light)' }}>No matching questions found.</p>
         )}
-        {filtered.map((item, i) => {
+        {filtered.map((item) => {
           const globalIdx = FAQS.indexOf(item);
           return (
             <div key={globalIdx} className="card overflow-hidden">

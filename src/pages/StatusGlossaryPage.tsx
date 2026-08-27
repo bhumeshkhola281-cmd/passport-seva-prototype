@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Search, Shield, Truck, CheckCircle, FileText, Eye, Printer, Package, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Clock, Shield, Truck, CheckCircle, FileText, Eye, Printer, Package, AlertCircle } from 'lucide-react';
 
 const STATUSES = [
   { id: 'submitted', icon: FileText, label: 'Application Submitted', duration: 'Immediate', meaning: 'Your application has been received and a file number has been assigned. No action needed from you.', action: 'Save your application reference number.' },
@@ -45,7 +45,7 @@ export function StatusGlossaryPage() {
         <div className="absolute left-4 top-4 bottom-4 w-0.5" style={{ background: 'var(--color-ivory-dark)' }} />
 
         <div className="space-y-1">
-          {STATUSES.map((s, i) => (
+          {STATUSES.map((s) => (
             <div key={s.id} className="relative pl-14 pb-8">
               {/* Dot */}
               <div

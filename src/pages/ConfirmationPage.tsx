@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { AppointmentPass } from '../components/ui/AppointmentPass';
@@ -44,7 +44,12 @@ export function ConfirmationPage() {
         {/* Pass + 3D Book Section */}
         <div className="flex-1">
           <AppointmentPass 
-            appointment={draft.appointment} 
+            appointment={{
+              centre: draft.appointment.centre,
+              date: draft.appointment.date,
+              time: draft.appointment.time,
+              reference: draft.id || 'SL-APP-2026',
+            }} 
             journeyType={draft.journeyType === 'reissue' ? 'Passport Reissue' : 'New Passport'} 
           />
 

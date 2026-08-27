@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Info, CheckCircle2, AlertTriangle, Shield, Database, Lock, Eye } from 'lucide-react';
 
@@ -100,7 +99,7 @@ export function AboutPrototypePage() {
                   <th className="py-3 px-4 w-1/2">What is intentionally mocked</th>
                 </tr>
               </thead>
-              <tbody className="divide-y" style={{ divideColor: 'var(--color-graphite-light)' }}>
+              <tbody className="divide-y divide-zinc-800">
                 <tr>
                   <td className="py-4 px-4 flex items-start gap-2">
                     <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--color-success)' }} />

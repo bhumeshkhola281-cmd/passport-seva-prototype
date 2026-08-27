@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Upload, CheckCircle, XCircle, AlertTriangle, Shield, Image, FileText } from 'lucide-react';
+import { ArrowLeft, Upload, CheckCircle, XCircle, Shield, Image, FileText } from 'lucide-react';
 
 type Result = { label: string; pass: boolean; detail: string };
 

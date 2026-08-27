@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapPin, Clock, Languages, Check } from 'lucide-react';
 
 interface Centre {

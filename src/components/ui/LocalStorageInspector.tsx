@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useApplication } from '../../context/ApplicationContext';
 import { 
   Database, 
@@ -11,7 +11,6 @@ import {
   ShieldCheck, 
   WifiOff, 
   RefreshCw, 
-  ExternalLink,
   Code2
 } from 'lucide-react';
 

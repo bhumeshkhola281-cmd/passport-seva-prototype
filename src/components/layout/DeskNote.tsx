@@ -1,4 +1,5 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 type DeskNoteProps = {
