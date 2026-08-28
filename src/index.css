@@ -710,3 +710,169 @@ a:hover {
   transform: translateY(-1px);
 }
 
+/* ── Government-Grade Verified Border System ─────────────────── */
+
+@property --trace-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --live-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ── Primary CTA ────────────────────────────────────────────── */
+.cta-primary {
+  position: relative;
+  border-radius: 6px;
+  /* Two-tone hairline: light top/left, darker bottom/right = inset card depth */
+  border: 1px solid transparent;
+  border-top-color: rgba(255,255,255,0.18);
+  border-left-color: rgba(255,255,255,0.14);
+  border-bottom-color: rgba(0,0,0,0.22);
+  border-right-color: rgba(0,0,0,0.16);
+  isolation: isolate;
+  overflow: visible;
+}
+
+/* Live gradient shimmer — subtle rotating border, "live system" indicator */
+.cta-primary::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--live-angle),
+    transparent 0%,
+    rgba(16,185,129,0.12) 8%,
+    transparent 18%,
+    rgba(6,182,212,0.08) 28%,
+    transparent 38%,
+    rgba(16,185,129,0.10) 58%,
+    transparent 68%,
+    rgba(56,189,248,0.06) 82%,
+    transparent 100%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  animation: borderLiveSpin 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.65;
+}
+
+/* Hover: traced/drawn-on border — sweeps around perimeter in ~300ms */
+.cta-primary::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid #10b981;
+  opacity: 0;
+  --trace-angle: 0deg;
+  mask: conic-gradient(from 0deg at 50% 50%, #000 var(--trace-angle), transparent var(--trace-angle));
+  -webkit-mask: conic-gradient(from 0deg at 50% 50%, #000 var(--trace-angle), transparent var(--trace-angle));
+  transition: opacity 0.05s, --trace-angle 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cta-primary:hover {
+  border-top-color: rgba(16,185,129,0.25);
+  border-left-color: rgba(16,185,129,0.20);
+  border-bottom-color: rgba(16,185,129,0.12);
+  border-right-color: rgba(16,185,129,0.12);
+}
+
+.cta-primary:hover::after {
+  opacity: 1;
+  --trace-angle: 360deg;
+}
+
+/* Focus: dashed accent outline — "transparent, inspectable" */
+.cta-primary:focus-visible {
+  outline: 2px dashed #10b981;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@keyframes borderLiveSpin {
+  to { --live-angle: 360deg; }
+}
+
+/* ── Card Action Links ──────────────────────────────────────── */
+.cta-card-action {
+  position: relative;
+  border-radius: 4px;
+  /* Two-tone hairline — subtle inset depth on dark glass cards */
+  border: 1px solid transparent;
+  border-top-color: rgba(255,255,255,0.08);
+  border-left-color: rgba(255,255,255,0.06);
+  border-bottom-color: rgba(255,255,255,0.025);
+  border-right-color: rgba(255,255,255,0.025);
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.3s ease;
+  isolation: isolate;
+  overflow: visible;
+}
+
+/* Hover: traced/drawn-on border */
+.cta-card-action::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid #10b981;
+  opacity: 0;
+  --trace-angle: 0deg;
+  mask: conic-gradient(from 0deg at 50% 50%, #000 var(--trace-angle), transparent var(--trace-angle));
+  -webkit-mask: conic-gradient(from 0deg at 50% 50%, #000 var(--trace-angle), transparent var(--trace-angle));
+  transition: opacity 0.05s, --trace-angle 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.cta-card-action:hover {
+  border-color: rgba(16,185,129,0.18);
+  /* Inner glow — "unlocking" feel */
+  box-shadow: inset 0 0 10px rgba(16,185,129,0.08), 0 0 8px rgba(16,185,129,0.06);
+}
+
+.cta-card-action:hover::after {
+  opacity: 1;
+  --trace-angle: 360deg;
+}
+
+/* Focus: dashed accent outline */
+.cta-card-action:focus-visible {
+  outline: 2px dashed #10b981;
+  outline-offset: 2px;
+}
+
+/* On hover, the card action arrow slides right */
+.cta-card-action:hover .cta-card-arrow {
+  transform: translateX(3px);
+  color: #10b981;
+}
+
+.cta-card-arrow {
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* On hover, the card action label shifts to accent */
+.cta-card-action:hover .cta-card-label {
+  color: #10b981 !important;
+}
+
+.cta-card-label {
+  transition: color 0.25s ease;
+}

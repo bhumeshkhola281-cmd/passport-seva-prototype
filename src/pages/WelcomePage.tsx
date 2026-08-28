@@ -141,13 +141,13 @@ export const WelcomePage: React.FC = () => {
             <div className="landing-reveal landing-reveal-delay-4 flex flex-wrap gap-4 mb-10">
               <button
                 onClick={handleStart}
-                className="group flex items-center gap-3 px-9 py-4 rounded-xl text-base font-bold transition-all duration-200"
+                className="cta-primary group flex items-center gap-3 px-9 py-4 text-base font-bold transition-all duration-200"
                 style={{
                   background: `linear-gradient(135deg, ${C.cyan} 0%, ${C.ice} 100%)`,
                   color: '#0a0a0c',
                   boxShadow: `0 0 25px ${C.cyanGlow}, 0 4px 14px rgba(0,0,0,0.4)`,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 45px rgba(6,182,212,0.55), 0 8px 24px rgba(0,0,0,0.5)'; e.currentTarget.style.transform = 'scale(1.03) translateY(-2px)'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 45px rgba(6,182,212,0.55), 0 8px 24px rgba(0,0,0,0.5), inset 0 0 16px rgba(16,185,129,0.12)'; e.currentTarget.style.transform = 'scale(1.03) translateY(-2px)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 0 25px ${C.cyanGlow}, 0 4px 14px rgba(0,0,0,0.4)`; e.currentTarget.style.transform = 'scale(1) translateY(0)'; }}
               >
                 Begin your application
@@ -340,9 +340,9 @@ export const WelcomePage: React.FC = () => {
                   <h3 className="text-xl font-bold mb-3" style={{ color: 'white' }}>{title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{desc}</p>
                 </div>
-                <div className="mt-6 pt-4 border-t flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-                  <span className="text-xs font-bold" style={{ color }}>{cta}</span>
-                  <span className="text-sm font-bold" style={{ color }}>&rarr;</span>
+                <div className="cta-card-action mt-6 flex items-center justify-between" style={{ borderTopColor: 'rgba(255,255,255,0.06)' }}>
+                  <span className="cta-card-label text-xs font-bold" style={{ color }}>{cta}</span>
+                  <span className="cta-card-arrow text-sm font-bold" style={{ color }}>&rarr;</span>
                 </div>
               </div>
             ))}
@@ -461,13 +461,13 @@ export const WelcomePage: React.FC = () => {
           <div className="text-center mt-16">
             <button
               onClick={handleStart}
-              className="group inline-flex items-center gap-3 px-10 py-5 rounded-xl text-lg font-bold transition-all duration-200"
+              className="cta-primary group inline-flex items-center gap-3 px-10 py-5 text-lg font-bold transition-all duration-200"
               style={{
                 background: `linear-gradient(135deg, ${C.cyan} 0%, ${C.ice} 100%)`,
                 color: '#0a0a0c',
                 boxShadow: `0 0 25px ${C.cyanGlow}, 0 4px 14px rgba(0,0,0,0.4)`,
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 45px rgba(6,182,212,0.55), 0 8px 24px rgba(0,0,0,0.5)'; e.currentTarget.style.transform = 'scale(1.03) translateY(-2px)'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 45px rgba(6,182,212,0.55), 0 8px 24px rgba(0,0,0,0.5), inset 0 0 16px rgba(16,185,129,0.12)'; e.currentTarget.style.transform = 'scale(1.03) translateY(-2px)'; }}
               onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 0 25px ${C.cyanGlow}, 0 4px 14px rgba(0,0,0,0.4)`; e.currentTarget.style.transform = 'scale(1) translateY(0)'; }}
             >
               Start your passport journey
