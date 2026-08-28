@@ -24,7 +24,7 @@ Most passport-portal redesigns focus on how the interface looks. This one focuse
 ## 🛠️ Tech Stack
 - **Framework**: React 18 with TypeScript
 - **Bundler**: Vite + Rolldown
-- **Styling**: Tailwind CSS with Web3 Cyberpunk/Dark mode design tokens
+- **Styling**: Tailwind CSS — a precision-instrument dark mode, restrained and high-contrast, designed for trust rather than spectacle
 - **3D Graphics**: Three.js
 - **Icons**: Lucide React
 - **Storage**: Client-side `window.localStorage` (Local-first architecture)
@@ -40,7 +40,7 @@ Most passport-portal redesigns focus on how the interface looks. This one focuse
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/passport-seva-prototype.git
+git clone https://github.com/bhumeshkhola281-cmd/passport-seva-prototype.git
 cd passport-seva-prototype
 
 # Install dependencies
