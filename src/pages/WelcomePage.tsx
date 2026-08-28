@@ -140,14 +140,12 @@ export const WelcomePage: React.FC = () => {
               <br />
               moves{' '}
               <span
-                className="inline-block font-extrabold"
+                className="hero-gradient-text"
                 style={{
-                  background: `linear-gradient(135deg, ${t.primaryLight || t.primary} 0%, ${t.secondary} 50%, ${t.accent} 100%)`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                }}
+                  '--gradient-from': t.primaryLight || t.primary,
+                  '--gradient-via': t.secondary,
+                  '--gradient-to': t.accent,
+                } as React.CSSProperties}
               >
                 with you.
               </span>
