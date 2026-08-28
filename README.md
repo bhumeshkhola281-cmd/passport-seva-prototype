@@ -5,6 +5,9 @@ Built for the **"Build What Moves India"** Hackathon (OpenAI / Codex Initiative)
 
 ![Passport Seva Prototype Cover](public/passport.jpg)
 
+🔗 **Live Demo**: [passport-seva-prototype.vercel.app](https://passport-seva-prototype.vercel.app/)
+*(Mirror: [Netlify](https://passport-seva-prototype.netlify.app/))*
+
 ## 🚀 Overview
 **Passport Seva Prototype** addresses the most stressful part of applying for or renewing an Indian passport: moving from *"I need a passport"* to *"I know exactly what I need, where I am in the process, what I have paid for, and what I must bring to my appointment."*
 
