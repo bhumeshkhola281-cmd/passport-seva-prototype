@@ -6,12 +6,14 @@ import { BookOpen, Palette } from 'lucide-react';
 import { LocalStorageInspector } from '../ui/LocalStorageInspector';
 import { ThemeSelectorModal, ThemeQuickTrigger } from '../ui/ThemeSelectorModal';
 import { useTheme } from '../../context/ThemeContext';
+import { useAccessibility } from '../../context/AccessibilityContext';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const isApplyRoute = location.pathname.startsWith('/apply');
   const isLanding = location.pathname === '/';
   const { theme, openThemeModal } = useTheme();
+  const { language, setLanguage, textScale, setTextScale, t } = useAccessibility();
 
   // Landing page gets full-bleed rendering — with persistent local storage inspector and theme modal
   if (isLanding) {
@@ -60,11 +62,90 @@ export function AppShell({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav className="flex items-center gap-3">
+          <nav className="flex items-center gap-2.5">
+            {/* Text Scale Accessibility Control */}
+            <div
+              className="hidden sm:inline-flex items-center rounded-md border p-0.5 text-xs font-mono"
+              style={{
+                borderColor: theme.tokens.border,
+                background: theme.tokens.surfaceGlass,
+              }}
+              title="Text size scaling"
+            >
+              <button
+                type="button"
+                onClick={() => setTextScale('normal')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: textScale === 'normal' ? theme.tokens.primary : 'transparent',
+                  color: textScale === 'normal' ? (theme.mode === 'light' ? '#fff' : '#0a0a0c') : theme.tokens.textMuted,
+                  fontWeight: textScale === 'normal' ? 'bold' : 'normal',
+                }}
+              >
+                A-
+              </button>
+              <button
+                type="button"
+                onClick={() => setTextScale('large')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: textScale === 'large' ? theme.tokens.primary : 'transparent',
+                  color: textScale === 'large' ? (theme.mode === 'light' ? '#fff' : '#0a0a0c') : theme.tokens.textMuted,
+                  fontWeight: textScale === 'large' ? 'bold' : 'normal',
+                }}
+              >
+                A
+              </button>
+              <button
+                type="button"
+                onClick={() => setTextScale('xlarge')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: textScale === 'xlarge' ? theme.tokens.primary : 'transparent',
+                  color: textScale === 'xlarge' ? (theme.mode === 'light' ? '#fff' : '#0a0a0c') : theme.tokens.textMuted,
+                  fontWeight: textScale === 'xlarge' ? 'bold' : 'normal',
+                }}
+              >
+                A+
+              </button>
+            </div>
+
+            {/* Language Toggle */}
+            <div
+              className="inline-flex items-center rounded-md border p-0.5 text-xs font-semibold"
+              style={{
+                borderColor: theme.tokens.border,
+                background: theme.tokens.surfaceGlass,
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: language === 'en' ? theme.tokens.primary : 'transparent',
+                  color: language === 'en' ? (theme.mode === 'light' ? '#fff' : '#0a0a0c') : theme.tokens.textMuted,
+                }}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage('hi')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: language === 'hi' ? theme.tokens.primary : 'transparent',
+                  color: language === 'hi' ? (theme.mode === 'light' ? '#fff' : '#0a0a0c') : theme.tokens.textMuted,
+                }}
+              >
+                हिन्दी
+              </button>
+            </div>
+
             <button
               type="button"
               onClick={openThemeModal}
-              className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
+              className="hidden md:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
               style={{
                 background: theme.tokens.badgeBg,
                 color: theme.tokens.primary,
@@ -89,20 +170,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               title="Inspect live browser local storage state"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Inspect Vault</span>
-            </button>
-
-            <button
-              type="button"
-              className="text-sm px-3.5 py-1.5 rounded-md font-medium transition-colors"
-              style={{
-                color: theme.tokens.text,
-                backgroundColor: theme.tokens.surfaceGlass,
-                border: `1px solid ${theme.tokens.border}`,
-              }}
-              title="Language selection (English only in this prototype)"
-            >
-              EN / हि
+              <span>{t('inspectVault')}</span>
             </button>
           </nav>
         </div>

@@ -18,9 +18,25 @@ export function AboutPrototypePage() {
         Return to the prototype
       </button>
 
-      <h1 className="text-4xl mb-12" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-indigo)' }}>
+      <h1 className="text-4xl mb-4" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-indigo)' }}>
         About this prototype
       </h1>
+
+      {/* ── Executive Thesis Statement ── */}
+      <div 
+        className="card p-6 mb-10 border-l-4"
+        style={{
+          borderLeftColor: 'var(--color-indigo)',
+          background: 'linear-gradient(90deg, var(--color-surface-warm) 0%, var(--color-surface) 100%)',
+        }}
+      >
+        <div className="text-xs uppercase tracking-widest font-mono font-bold mb-1" style={{ color: 'var(--color-indigo)' }}>
+          System Thesis
+        </div>
+        <p className="text-lg sm:text-xl font-semibold leading-snug" style={{ color: 'var(--color-graphite)', fontFamily: 'var(--font-display)' }}>
+          "Public trust engineered through client-verifiable state, idempotent payment recovery, and procedural transparency."
+        </p>
+      </div>
 
       <div className="space-y-12">
         <section className="card p-8">

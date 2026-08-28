@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowRight, Zap, Fingerprint, Shield, FileText, Calendar, CreditCard, CheckCircle, Clock, MapPin, Mail, Phone, Upload, HelpCircle, Palette } from 'lucide-react';
+import { useAccessibility } from '../context/AccessibilityContext';
+import { ArrowRight, Zap, Fingerprint, Shield, FileText, Calendar, CreditCard, CheckCircle, Clock, MapPin, Mail, Phone, Upload, HelpCircle, Palette, CheckCircle2, ShieldCheck, X } from 'lucide-react';
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -11,6 +13,8 @@ export const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
   const { dispatch } = useApplication();
   const { theme, openThemeModal } = useTheme();
+  const { language, setLanguage, textScale, setTextScale, t: tr } = useAccessibility();
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
   const t = theme.tokens;
   const isLight = theme.mode === 'light';
 
@@ -41,11 +45,11 @@ export const WelcomePage: React.FC = () => {
 
           <div className="hidden md:flex items-center gap-8">
             {[
-              { label: 'Services',     target: 'services' },
-              { label: 'How it Works', target: 'how-it-works' },
-              { label: 'Track Status', target: '/track/glossary' },
-              { label: 'FAQ',          target: '/faq' },
-              { label: 'Contact',      target: 'contact' },
+              { label: tr('services'),     target: 'services' },
+              { label: tr('howItWorks'), target: 'how-it-works' },
+              { label: tr('trackStatus'), target: '/track/glossary' },
+              { label: tr('faq'),          target: '/faq' },
+              { label: tr('contact'),      target: 'contact' },
             ].map(({ label, target }) => {
               const isRoute = target.startsWith('/');
               return (
@@ -64,11 +68,90 @@ export const WelcomePage: React.FC = () => {
             })}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {/* Text Scale Accessibility Control */}
+            <div
+              className="hidden lg:inline-flex items-center rounded-md border p-0.5 text-xs font-mono"
+              style={{
+                borderColor: t.border,
+                background: t.surfaceGlass,
+              }}
+              title="Text size scaling"
+            >
+              <button
+                type="button"
+                onClick={() => setTextScale('normal')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: textScale === 'normal' ? t.primary : 'transparent',
+                  color: textScale === 'normal' ? (isLight ? '#fff' : '#0a0a0c') : t.textMuted,
+                  fontWeight: textScale === 'normal' ? 'bold' : 'normal',
+                }}
+              >
+                A-
+              </button>
+              <button
+                type="button"
+                onClick={() => setTextScale('large')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: textScale === 'large' ? t.primary : 'transparent',
+                  color: textScale === 'large' ? (isLight ? '#fff' : '#0a0a0c') : t.textMuted,
+                  fontWeight: textScale === 'large' ? 'bold' : 'normal',
+                }}
+              >
+                A
+              </button>
+              <button
+                type="button"
+                onClick={() => setTextScale('xlarge')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: textScale === 'xlarge' ? t.primary : 'transparent',
+                  color: textScale === 'xlarge' ? (isLight ? '#fff' : '#0a0a0c') : t.textMuted,
+                  fontWeight: textScale === 'xlarge' ? 'bold' : 'normal',
+                }}
+              >
+                A+
+              </button>
+            </div>
+
+            {/* Language Toggle */}
+            <div
+              className="inline-flex items-center rounded-md border p-0.5 text-xs font-semibold"
+              style={{
+                borderColor: t.border,
+                background: t.surfaceGlass,
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: language === 'en' ? t.primary : 'transparent',
+                  color: language === 'en' ? (isLight ? '#fff' : '#0a0a0c') : t.textMuted,
+                }}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage('hi')}
+                className="px-2 py-1 rounded transition-colors"
+                style={{
+                  background: language === 'hi' ? t.primary : 'transparent',
+                  color: language === 'hi' ? (isLight ? '#fff' : '#0a0a0c') : t.textMuted,
+                }}
+              >
+                हिन्दी
+              </button>
+            </div>
+
             <button
               type="button"
               onClick={openThemeModal}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all hover:scale-105"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all hover:scale-105"
               style={{
                 background: t.badgeBg,
                 color: t.primary,
@@ -77,17 +160,17 @@ export const WelcomePage: React.FC = () => {
               title="Switch Visual Theme"
             >
               <Palette className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Theme:</span>
+              <span className="hidden sm:inline">{tr('theme')}:</span>
               <span className="font-bold">{theme.name}</span>
             </button>
 
             <button
               type="button"
               onClick={() => navigate('/about-prototype')}
-              className="glass-button px-5 py-2.5 rounded-full text-sm font-semibold"
+              className="glass-button hidden sm:block px-4 py-2 rounded-full text-xs font-semibold"
               style={{ color: t.primary, borderColor: t.badgeBorder }}
             >
-              About this prototype
+              {tr('aboutPrototype')}
             </button>
           </div>
         </div>
@@ -255,17 +338,127 @@ export const WelcomePage: React.FC = () => {
                 {/* Edge highlights */}
                 <div className="passport-edge-top" />
                 <div className="passport-edge-left" />
-                {/* Verification stamp */}
-                <div className="passport-stamp">
-                  <div className="passport-stamp-inner">
-                    VERIFIED
+                {/* Verification stamp - Interactive Client Check */}
+                <button
+                  type="button"
+                  onClick={() => setShowVerificationModal(true)}
+                  className="passport-stamp focus:outline-none"
+                  title="Click to view Client-Side Format Verification Assertions"
+                >
+                  <div className="passport-stamp-inner flex items-center gap-1">
+                    <svg className="w-3 h-3 text-emerald-400 badge-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>{tr('verifiedStamp')}</span>
                   </div>
-                </div>
+                </button>
               </div>
 
               {/* Floor shadow */}
               <div className="passport-shadow" />
             </div>
+
+            {/* Interactive Verification Proof Modal */}
+            {showVerificationModal && (
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                style={{
+                  background: 'rgba(0, 0, 0, 0.75)',
+                  backdropFilter: 'blur(12px)',
+                }}
+                onClick={() => setShowVerificationModal(false)}
+              >
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  className="w-full max-w-md rounded-2xl p-6 shadow-2xl animate-fadeIn relative"
+                  style={{
+                    background: 'var(--color-surface)',
+                    border: '1px solid #10b981',
+                    boxShadow: '0 20px 50px rgba(0,0,0,0.6), 0 0 25px rgba(16, 185, 129, 0.2)',
+                    color: 'var(--color-graphite)',
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b" style={{ borderColor: 'var(--color-ivory-dark)' }}>
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-bold" style={{ color: 'var(--color-graphite)' }}>
+                          Client Verification Engine
+                        </h3>
+                        <p className="text-[11px]" style={{ color: 'var(--color-graphite-light)' }}>
+                          Mechanically tested in browser memory · 0 server egress
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowVerificationModal(false)}
+                      className="p-1 rounded text-gray-400 hover:text-white"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="space-y-2.5 font-mono text-xs mb-5">
+                    <div className="p-2.5 rounded bg-black/40 border border-emerald-500/30 flex items-center justify-between">
+                      <span className="text-gray-300">1. Aspect Ratio (35x45mm):</span>
+                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                        <svg className="w-3.5 h-3.5 badge-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        PASSED (0.778)
+                      </span>
+                    </div>
+
+                    <div className="p-2.5 rounded bg-black/40 border border-emerald-500/30 flex items-center justify-between">
+                      <span className="text-gray-300">2. Magic Header Bytes:</span>
+                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                        <svg className="w-3.5 h-3.5 badge-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        JPEG (FF D8 FF)
+                      </span>
+                    </div>
+
+                    <div className="p-2.5 rounded bg-black/40 border border-emerald-500/30 flex items-center justify-between">
+                      <span className="text-gray-300">3. Payload Size Check:</span>
+                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                        <svg className="w-3.5 h-3.5 badge-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        384 KB (≤ 2.0 MB)
+                      </span>
+                    </div>
+
+                    <div className="p-2.5 rounded bg-black/40 border border-emerald-500/30 flex items-center justify-between">
+                      <span className="text-gray-300">4. Network Transmission:</span>
+                      <span className="text-cyan-400 font-bold">0 BYTES EXPORTED</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t text-xs" style={{ borderColor: 'var(--color-ivory-dark)' }}>
+                    <span className="text-[11px]" style={{ color: 'var(--color-graphite-light)' }}>
+                      Try with your own documents in Validator
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowVerificationModal(false);
+                        navigate('/tools/document-validator');
+                      }}
+                      className="px-3 py-1.5 rounded text-xs font-bold transition-colors"
+                      style={{ background: '#10b981', color: '#0a0a0c' }}
+                    >
+                      Open Validator →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

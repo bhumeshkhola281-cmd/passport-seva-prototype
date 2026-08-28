@@ -963,3 +963,40 @@ html[data-mode="light"] .btn-primary {
   color: #ffffff;
 }
 
+/* ── Accessibility Text Scaling ──────────────────────────────── */
+html[data-text-scale="large"] {
+  font-size: 114%;
+}
+
+html[data-text-scale="xlarge"] {
+  font-size: 126%;
+}
+
+/* ── Functional Verification Stamp & Draw-On Animation ───────── */
+.badge-check-icon {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 0;
+  animation: checkDrawOn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes checkDrawOn {
+  from {
+    stroke-dashoffset: 24;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.passport-stamp {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.passport-stamp:hover {
+  transform: rotate(-10deg) scale(1.08);
+}
+
+

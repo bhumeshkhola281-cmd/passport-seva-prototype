@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { FormField } from '../components/ui/FormField';
+import { VaultNudge } from '../components/ui/VaultNudge';
 import { INDIAN_STATES } from '../data/mockData';
 import { ArrowRight, User, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 
@@ -108,6 +109,9 @@ export function DetailsPage() {
           </div>
         )}
       </div>
+
+      {/* Local Vault In-Flow Discovery Nudge */}
+      <VaultNudge fieldKey="profile" />
 
       {/* ── Personal Details ──────────────────────────────────────── */}
       <section
