@@ -139,10 +139,16 @@ export const WelcomePage: React.FC = () => {
               Identity that
               <br />
               moves{' '}
-              <span style={{
-                background: `linear-gradient(135deg, ${t.primary} 0%, ${t.secondary} 60%, ${t.accent} 100%)`,
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              }}>
+              <span
+                className="inline-block font-extrabold"
+                style={{
+                  background: `linear-gradient(135deg, ${t.primaryLight || t.primary} 0%, ${t.secondary} 50%, ${t.accent} 100%)`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                }}
+              >
                 with you.
               </span>
             </h1>
