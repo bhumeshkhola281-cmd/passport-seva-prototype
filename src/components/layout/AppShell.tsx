@@ -2,36 +2,41 @@ import type { ReactNode } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { DisclaimerBanner } from './DisclaimerBanner';
 import { JourneySpine } from './JourneySpine';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Palette } from 'lucide-react';
 import { LocalStorageInspector } from '../ui/LocalStorageInspector';
+import { ThemeSelectorModal, ThemeQuickTrigger } from '../ui/ThemeSelectorModal';
+import { useTheme } from '../../context/ThemeContext';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const isApplyRoute = location.pathname.startsWith('/apply');
   const isLanding = location.pathname === '/';
+  const { theme, openThemeModal } = useTheme();
 
-  // Landing page gets full-bleed rendering — with persistent local storage inspector
+  // Landing page gets full-bleed rendering — with persistent local storage inspector and theme modal
   if (isLanding) {
     return (
       <>
         {children}
         <LocalStorageInspector />
+        <ThemeQuickTrigger />
+        <ThemeSelectorModal />
       </>
     );
   }
 
   return (
-    <div className="min-h-dvh flex flex-col" style={{ backgroundColor: 'var(--color-ivory)' }}>
+    <div className="min-h-dvh flex flex-col transition-colors duration-300" style={{ backgroundColor: 'var(--color-ivory)', color: 'var(--color-graphite)' }}>
       <DisclaimerBanner />
 
       {/* Header */}
       <header
-        className="sticky top-0 z-40 border-b"
+        className="sticky top-0 z-40 border-b transition-colors duration-300"
         style={{
-          background: 'rgba(10, 10, 12, 0.75)',
+          background: theme.tokens.navGlassBg,
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          borderColor: 'rgba(255,255,255,0.08)'
+          borderColor: theme.tokens.border,
         }}
       >
         <div className="mx-auto flex items-center justify-between px-6 py-4" style={{ maxWidth: '1200px' }}>
@@ -41,43 +46,59 @@ export function AppShell({ children }: { children: ReactNode }) {
               style={{
                 width: '40px',
                 height: '40px',
-                background: 'rgba(6, 182, 212, 0.15)',
-                border: '1px solid rgba(6, 182, 212, 0.25)'
+                background: theme.tokens.primaryDim,
+                border: `1px solid ${theme.tokens.badgeBorder}`,
               }}
             >
-              <BookOpen size={22} style={{ color: '#06b6d4' }} strokeWidth={2} />
+              <BookOpen size={22} style={{ color: theme.tokens.primary }} strokeWidth={2} />
             </div>
             <span
               className="text-xl font-bold leading-tight tracking-wide"
-              style={{ fontFamily: 'var(--font-display)', color: 'white' }}
+              style={{ fontFamily: 'var(--font-display)', color: theme.tokens.text }}
             >
               Passport Seva
             </span>
           </Link>
 
-          <nav className="flex items-center gap-4">
+          <nav className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={openThemeModal}
+              className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
+              style={{
+                background: theme.tokens.badgeBg,
+                color: theme.tokens.primary,
+                border: `1px solid ${theme.tokens.badgeBorder}`,
+              }}
+              title="Change visual theme"
+            >
+              <Palette size={14} />
+              <span className="hidden sm:inline">Theme:</span>
+              <span className="font-bold">{theme.name}</span>
+            </button>
+
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-storage-inspector'))}
               className="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all"
               style={{
-                background: 'rgba(6, 182, 212, 0.12)',
-                color: '#38bdf8',
-                border: '1px solid rgba(6, 182, 212, 0.3)'
+                background: theme.tokens.badgeBg,
+                color: theme.tokens.secondary,
+                border: `1px solid ${theme.tokens.badgeBorder}`,
               }}
               title="Inspect live browser local storage state"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Inspect Local Vault</span>
+              <span>Inspect Vault</span>
             </button>
 
             <button
               type="button"
-              className="text-sm px-4 py-2 rounded-md font-medium transition-colors hover:bg-white/10"
+              className="text-sm px-3.5 py-1.5 rounded-md font-medium transition-colors"
               style={{
-                color: 'white',
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                border: '1px solid rgba(255,255,255,0.15)'
+                color: theme.tokens.text,
+                backgroundColor: theme.tokens.surfaceGlass,
+                border: `1px solid ${theme.tokens.border}`,
               }}
               title="Language selection (English only in this prototype)"
             >
@@ -114,8 +135,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
       </div>
 
-      {/* Persistent LocalStorage Inspector */}
+      {/* Persistent LocalStorage Inspector & Theme Modals */}
       <LocalStorageInspector />
+      <ThemeQuickTrigger />
+      <ThemeSelectorModal />
 
       {/* Footer */}
       <footer

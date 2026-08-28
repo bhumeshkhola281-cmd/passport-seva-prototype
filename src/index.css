@@ -876,3 +876,79 @@ a:hover {
 .cta-card-label {
   transition: color 0.25s ease;
 }
+
+/* ── Global Theme Adaptations & Light Mode ───────────────────── */
+
+html, body, .card, .glass, .glass-button, .form-input {
+  transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease, box-shadow 300ms ease;
+}
+
+/* Light Mode Specific Overrides */
+html[data-mode="light"] body {
+  background-color: var(--color-ivory);
+  color: var(--color-graphite);
+}
+
+html[data-mode="light"] .card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+html[data-mode="light"] .card:hover {
+  border-color: var(--color-indigo);
+  box-shadow: 0 10px 25px rgba(30, 58, 138, 0.08);
+}
+
+html[data-mode="light"] .form-input {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html[data-mode="light"] .form-input:focus {
+  border-color: var(--color-indigo);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.12);
+}
+
+html[data-mode="light"] .glass {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+html[data-mode="light"] .glass-button {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
+html[data-mode="light"] .glass-button:hover {
+  background: #ffffff;
+  border-color: var(--color-indigo);
+  color: var(--color-indigo);
+}
+
+html[data-mode="light"] .btn-ghost {
+  color: #0f172a;
+}
+
+html[data-mode="light"] .btn-ghost:hover {
+  background-color: rgba(15, 23, 42, 0.06);
+}
+
+html[data-mode="light"] .btn-secondary {
+  border-color: var(--color-indigo);
+  color: var(--color-indigo);
+}
+
+html[data-mode="light"] .btn-secondary:hover {
+  background-color: var(--color-indigo);
+  color: #ffffff;
+}
+
+html[data-mode="light"] .btn-primary {
+  color: #ffffff;
+}
+
