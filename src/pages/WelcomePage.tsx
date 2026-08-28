@@ -177,7 +177,27 @@ export const WelcomePage: React.FC = () => {
           </div>
 
           {/* RIGHT (40%) — Portal + Passport */}
-          <div className="lg:col-span-2 flex flex-col items-center justify-center relative" style={{ minHeight: '520px' }}>
+          <div
+            className="lg:col-span-2 flex flex-col items-center justify-center relative"
+            style={{ minHeight: '520px' }}
+            onMouseMove={(e) => {
+              const el = e.currentTarget.querySelector('.landing-passport') as HTMLElement;
+              if (!el) return;
+              const rect = e.currentTarget.getBoundingClientRect();
+              const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
+              const y = (e.clientY - rect.top) / rect.height - 0.5;
+              const rotateY = x * 20;  // max ±10deg
+              const rotateX = -y * 15; // max ±7.5deg
+              el.style.setProperty('--ry', `${rotateY}deg`);
+              el.style.setProperty('--rx', `${rotateX}deg`);
+            }}
+            onMouseLeave={() => {
+              const el = document.querySelector('.landing-passport') as HTMLElement;
+              if (!el) return;
+              el.style.removeProperty('--ry');
+              el.style.removeProperty('--rx');
+            }}
+          >
             {/* Portal ring */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2" style={{ perspective: '800px' }}>
               <div
@@ -195,20 +215,35 @@ export const WelcomePage: React.FC = () => {
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2" style={{ width: '200px', height: '10px', borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(6,182,212,0.3) 0%, transparent 70%)', filter: 'blur(6px)' }} />
             </div>
 
-            {/* Passport */}
+            {/* Passport with 3D effects */}
             <div className="landing-passport relative" style={{ marginBottom: '60px' }}>
-              <div className="absolute -inset-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(6,182,212,0.18) 0%, transparent 65%)', filter: 'blur(25px)' }} />
-              <div
-                className="relative rounded-lg overflow-hidden"
-                style={{
-                  width: '250px', height: '355px',
-                  boxShadow: '0 40px 80px rgba(0,0,0,0.65), 0 0 50px rgba(6,182,212,0.1), inset 0 1px 0 rgba(255,255,255,0.04)',
-                }}
-              >
+              {/* Ambient glow */}
+              <div className="passport-ambient" />
+
+              {/* Floating sparkle particles */}
+              <div className="passport-particle" />
+              <div className="passport-particle" />
+              <div className="passport-particle" />
+              <div className="passport-particle" />
+              <div className="passport-particle" />
+              <div className="passport-particle" />
+
+              {/* The 3D passport card */}
+              <div className="passport-card">
                 <img src="/passport.jpg" alt="Indian Passport" className="w-full h-full object-cover" style={{ filter: 'brightness(1.08) contrast(1.04)' }} />
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.07) 0%, transparent 35%, transparent 65%, rgba(6,182,212,0.04) 100%)' }} />
-                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(6,182,212,0.2), transparent)' }} />
+                {/* Edge highlights */}
+                <div className="passport-edge-top" />
+                <div className="passport-edge-left" />
+                {/* Verification stamp */}
+                <div className="passport-stamp">
+                  <div className="passport-stamp-inner">
+                    VERIFIED
+                  </div>
+                </div>
               </div>
+
+              {/* Floor shadow */}
+              <div className="passport-shadow" />
             </div>
           </div>
         </div>

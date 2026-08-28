@@ -417,14 +417,49 @@ a:hover {
   100% { opacity: 1; transform: perspective(1200px) rotateY(-8deg) rotateX(6deg) translateY(0px) scale(1); }
 }
 
-@keyframes float {
-  0%, 100% { transform: perspective(1200px) rotateY(-8deg) rotateX(6deg) translateY(0px); }
-  50%      { transform: perspective(1200px) rotateY(-8deg) rotateX(6deg) translateY(-16px); }
+@keyframes passportFloat {
+  0%, 100% { transform: perspective(1200px) rotateY(var(--ry, -5deg)) rotateX(var(--rx, 4deg)) translateY(0px) translateZ(0px); }
+  25%      { transform: perspective(1200px) rotateY(var(--ry, -3deg)) rotateX(var(--rx, 6deg)) translateY(-12px) translateZ(8px); }
+  50%      { transform: perspective(1200px) rotateY(var(--ry,  3deg)) rotateX(var(--rx, 3deg)) translateY(-20px) translateZ(12px); }
+  75%      { transform: perspective(1200px) rotateY(var(--ry,  5deg)) rotateX(var(--rx, 5deg)) translateY(-10px) translateZ(6px); }
+}
+
+@keyframes holoShine {
+  0%   { transform: translateX(-120%) rotate(25deg); }
+  100% { transform: translateX(220%) rotate(25deg); }
+}
+
+@keyframes particleFloat {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0); }
+  15%  { opacity: 1; transform: translate(var(--px, 10px), var(--py, -20px)) scale(1); }
+  85%  { opacity: 0.8; transform: translate(var(--px2, 30px), var(--py2, -60px)) scale(0.8); }
+  100% { opacity: 0; transform: translate(var(--px3, 40px), var(--py3, -80px)) scale(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.9; transform: scale(1.08); }
+}
+
+@keyframes shadowDrift {
+  0%, 100% { transform: translateX(-50%) rotateX(75deg) scaleX(0.85) scaleY(0.5); opacity: 0.35; }
+  50%      { transform: translateX(-50%) rotateX(75deg) scaleX(0.95) scaleY(0.45); opacity: 0.2; }
+}
+
+@keyframes edgeGlow {
+  0%, 100% { box-shadow: 0 40px 80px rgba(0,0,0,0.65), 0 0 40px rgba(6,182,212,0.08), 0 0 0 1px rgba(6,182,212,0.1); }
+  33%      { box-shadow: 0 40px 80px rgba(0,0,0,0.65), 0 0 60px rgba(6,182,212,0.2), 0 0 0 1px rgba(6,182,212,0.25); }
+  66%      { box-shadow: 0 40px 80px rgba(0,0,0,0.65), 0 0 50px rgba(212,168,67,0.12), 0 0 0 1px rgba(212,168,67,0.15); }
 }
 
 @keyframes portalGlow {
   0%, 100% { opacity: 0.7; box-shadow: 0 -10px 40px rgba(6, 182, 212, 0.35), inset 0 0 30px rgba(6, 182, 212, 0.08); }
   50%      { opacity: 1;   box-shadow: 0 -14px 50px rgba(6, 182, 212, 0.55), inset 0 0 40px rgba(6, 182, 212, 0.12); }
+}
+
+@keyframes portalRingSpin {
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
 }
 
 @keyframes orbPulse {
@@ -442,12 +477,193 @@ a:hover {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Passport: rise for 2s, then bob forever */
+/* ── 3D Passport System ─────────────────────────────────────── */
 .landing-passport {
   animation: riseUp 2s cubic-bezier(0.16, 1, 0.3, 1) both,
-             float 3s ease-in-out 2s infinite;
+             passportFloat 6s ease-in-out 2s infinite;
   transform-style: preserve-3d;
   will-change: transform, opacity;
+  transition: transform 0.1s ease-out;
+}
+
+/* The card itself */
+.passport-card {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 250px;
+  height: 355px;
+  animation: edgeGlow 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Holographic rainbow shine sweep */
+.passport-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(6, 182, 212, 0.08) 38%,
+    rgba(56, 189, 248, 0.12) 42%,
+    rgba(6, 182, 212, 0.15) 44%,
+    rgba(212, 168, 67, 0.12) 48%,
+    rgba(6, 182, 212, 0.08) 52%,
+    transparent 60%
+  );
+  width: 200%;
+  animation: holoShine 3.5s ease-in-out 2.5s infinite;
+  pointer-events: none;
+}
+
+/* Subtle inner glow overlay */
+.passport-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.1) 0%,
+    transparent 30%,
+    transparent 60%,
+    rgba(6,182,212,0.06) 100%
+  );
+  pointer-events: none;
+}
+
+/* Top edge light */
+.passport-edge-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,0.4), rgba(56,189,248,0.3), transparent);
+  z-index: 15;
+}
+
+/* Left edge light for page depth */
+.passport-edge-left {
+  position: absolute;
+  top: 8px; bottom: 8px; left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 80%, transparent);
+  z-index: 15;
+  border-radius: 2px 0 0 2px;
+}
+
+/* Corner stamp effect */
+.passport-stamp {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(6,182,212,0.3);
+  z-index: 12;
+  animation: glowPulse 3s ease-in-out 3s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passport-stamp-inner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px dashed rgba(6,182,212,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(6,182,212,0.4);
+  text-transform: uppercase;
+}
+
+/* Floor shadow under passport */
+.passport-shadow {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  width: 200px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(6,182,212,0.25) 0%, transparent 70%);
+  filter: blur(12px);
+  animation: shadowDrift 6s ease-in-out 2s infinite;
+  pointer-events: none;
+}
+
+/* Floating sparkle particles */
+.passport-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6,182,212,0.9), transparent);
+  pointer-events: none;
+  animation: particleFloat 3s ease-in-out infinite;
+}
+
+.passport-particle:nth-child(1) {
+  top: 10%; left: -12px;
+  --px: -15px; --py: -25px; --px2: -25px; --py2: -55px; --px3: -30px; --py3: -75px;
+  animation-delay: 0s;
+  animation-duration: 3.2s;
+}
+.passport-particle:nth-child(2) {
+  top: 35%; right: -10px; left: auto;
+  --px: 20px; --py: -18px; --px2: 35px; --py2: -45px; --px3: 42px; --py3: -65px;
+  animation-delay: 0.8s;
+  animation-duration: 2.8s;
+  width: 3px; height: 3px;
+  background: radial-gradient(circle, rgba(56,189,248,0.8), transparent);
+}
+.passport-particle:nth-child(3) {
+  top: 60%; left: -18px;
+  --px: -12px; --py: -30px; --px2: -20px; --py2: -65px; --px3: -25px; --py3: -90px;
+  animation-delay: 1.6s;
+  animation-duration: 3.5s;
+  width: 3px; height: 3px;
+  background: radial-gradient(circle, rgba(212,168,67,0.7), transparent);
+}
+.passport-particle:nth-child(4) {
+  top: 80%; right: -14px; left: auto;
+  --px: 18px; --py: -22px; --px2: 30px; --py2: -50px; --px3: 38px; --py3: -70px;
+  animation-delay: 2.2s;
+  animation-duration: 3s;
+  width: 5px; height: 5px;
+  background: radial-gradient(circle, rgba(6,182,212,0.6), transparent);
+}
+.passport-particle:nth-child(5) {
+  top: 20%; right: -8px; left: auto;
+  --px: 10px; --py: -35px; --px2: 18px; --py2: -70px; --px3: 22px; --py3: -95px;
+  animation-delay: 2.8s;
+  animation-duration: 3.8s;
+  width: 2px; height: 2px;
+  background: radial-gradient(circle, rgba(56,189,248,0.9), transparent);
+}
+.passport-particle:nth-child(6) {
+  top: 50%; left: -20px;
+  --px: -22px; --py: -15px; --px2: -35px; --py2: -40px; --px3: -40px; --py3: -60px;
+  animation-delay: 3.3s;
+  animation-duration: 2.6s;
+  width: 4px; height: 4px;
+  background: radial-gradient(circle, rgba(212,168,67,0.6), transparent);
+}
+
+/* Soft ambient glow behind passport */
+.passport-ambient {
+  position: absolute;
+  inset: -40px;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(6,182,212,0.2) 0%, rgba(56,189,248,0.08) 35%, transparent 65%);
+  filter: blur(30px);
+  animation: glowPulse 4s ease-in-out infinite;
 }
 
 .landing-portal-ring {
