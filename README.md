@@ -8,6 +8,8 @@ Built for the **"Build What Moves India"** Hackathon (OpenAI / Codex Initiative)
 ## 🚀 Overview
 **Passport Seva Prototype** addresses the most stressful part of applying for or renewing an Indian passport: moving from *"I need a passport"* to *"I know exactly what I need, where I am in the process, what I have paid for, and what I must bring to my appointment."*
 
+Most passport-portal redesigns focus on how the interface looks. This one focuses on whether its trust claims can actually be checked. Every core promise — privacy, payment safety, document validity — is verifiable in the browser itself, not just asserted in copy. Open DevTools, inspect the Live Data Vault, watch the payment recovery state hold under a simulated failure. Nothing here asks for your trust; it earns it.
+
 ### Key Features
 1. **Dynamic, Scenario-Aware Checklists**: Automatically tailors document requirements based on applicant circumstances (Fresh/Renewal, Marital/Name change, Address change) with format hints and plain-language "why we need this" explanations.
 2. **On-Device Document Validator**: Real-time client-side image and PDF analysis (dimensions, aspect ratio, file size, white background compliance) using HTML5 Canvas with **0 bytes transmitted to any server**.
